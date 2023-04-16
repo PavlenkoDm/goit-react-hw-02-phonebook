@@ -1,6 +1,6 @@
 export const Filter = ({ value, handleFilterChange }) => {
     return (
-        <label>
+        <label style={{fontSize: "24px"}}>
             Find contacts by name
             <input
                 type="text"

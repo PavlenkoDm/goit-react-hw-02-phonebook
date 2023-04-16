@@ -69,11 +69,11 @@ export class Phonebook extends Component {
 
         return (
             <div>
-                <h2>Phonebook</h2>
+                <h1>Phonebook</h1>
 
                 <ContactForm onSubmit={this.handleSubmit} />
 
-                <p>Contacts</p>
+                <h2>Contacts</h2>
 
                 <Filter
                     value={filter}
