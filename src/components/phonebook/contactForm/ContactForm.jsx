@@ -7,28 +7,30 @@ export class ContactForm extends Component {
         number: '',
     };
 
+    static idName = shortid.generate();
+    static idNumber = shortid.generate();
+
     handleInputChange = event => {
         const { name, value } = event.currentTarget;
         this.setState({ [name]: value });
     };
 
-    onSubmitHandler = (event) => {
+    onSubmitHandler = event => {
         event.preventDefault();
         this.props.onSubmit(this.state);
-    }
+        this.setState({ name: '', number: '' });
+    };
 
     render() {
         const { name, number } = this.state;
-        const idName = shortid.generate();
-        const idNumber = shortid.generate();
 
         return (
             <form onSubmit={this.onSubmitHandler}>
-                <label htmlFor={idName} style={{ display: 'block' }}>
+                <label htmlFor={ContactForm.idName} style={{ display: 'block' }}>
                     Name
                 </label>
                 <input
-                    id={idName}
+                    id={ContactForm.idName}
                     type="text"
                     name="name"
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -39,11 +41,11 @@ export class ContactForm extends Component {
                     onChange={this.handleInputChange}
                 />
 
-                <label htmlFor={idNumber} style={{ display: 'block' }}>
+                <label htmlFor={ContactForm.idNumber} style={{ display: 'block' }}>
                     Number
                 </label>
                 <input
-                    id={idNumber}
+                    id={ContactForm.idNumber}
                     type="tel"
                     name="number"
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

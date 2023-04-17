@@ -16,27 +16,25 @@ export class Phonebook extends Component {
     };
 
     handleSubmit = data => {
-        const idContact = shortid.generate();
+        const { contacts } = this.state;
+        const isInContacts = contacts.some(
+            ({ name }) => name.toLowerCase() === data.name.toLowerCase()
+        );
+
+        if (isInContacts) {
+            alert(`${data.name} is already in contacts`);
+            return;
+        }
 
         this.setState(prevState => {
             const { contacts } = prevState;
+            const newContact = {
+                id: shortid.generate(),
+                name: data.name,
+                number: data.number,
+            };
 
-            const isInContacts = contacts.some(
-                ({ name }) => name === data.name
-            );
-
-            if (isInContacts) {
-                alert(`${data.name} is already in contacts`);
-                return;
-            } else {
-                contacts.push({
-                    id: idContact,
-                    name: data.name,
-                    number: data.number,
-                });
-
-                return { contacts: [...contacts] };
-            }
+            return { contacts: [newContact, ...contacts]}
         });
     };
 
@@ -44,15 +42,9 @@ export class Phonebook extends Component {
         this.setState({ filter: event.currentTarget.value });
     };
 
-    handleDeleteClick = event => {
+    handleDeleteClick = id => {
         this.setState(prevState => {
-            const { contacts } = prevState;
-            const newArr = [...contacts];
-            const index = newArr.findIndex(
-                contact => contact.name === event.target.name
-            );
-            newArr.splice(index, 1);
-            return { contacts: newArr };
+            return ({contacts: prevState.contacts.filter(contact => contact.id !== id)});
         });
     };
 
@@ -66,6 +58,7 @@ export class Phonebook extends Component {
 
     render() {
         const { filter } = this.state;
+        const fiteredContacts = this.getFilteredContacts();
 
         return (
             <div>
@@ -81,7 +74,7 @@ export class Phonebook extends Component {
                 />
 
                 <ContactList
-                    getFilteredContacts={this.getFilteredContacts}
+                    fiteredContacts={fiteredContacts}
                     handleDeleteClick={this.handleDeleteClick}
                 />
             </div>

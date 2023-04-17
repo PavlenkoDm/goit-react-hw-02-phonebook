@@ -1,18 +1,17 @@
-import shortid from 'shortid';
 
 
-export const ContactList = ({ getFilteredContacts,  handleDeleteClick}) => {
+export const ContactList = ({ fiteredContacts,  handleDeleteClick}) => {
     return (
         <ul>
-            {getFilteredContacts().map(contact => {
-                const { name, number } = contact;
+            {fiteredContacts.map(contact => {
+                const { name, number, id } = contact;
                 return (
-                    <li key={shortid.generate()} style={{fontSize: "20px"}}>
+                    <li key={id} style={{fontSize: "20px"}}>
                         {name}: {number}
                         <button
                             type="button"
                             name={name}
-                            onClick={handleDeleteClick}
+                            onClick={() => handleDeleteClick(id)}
                             style={{marginLeft: "12px"}}
                         >
                             Delete
